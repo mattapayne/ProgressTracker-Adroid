@@ -1,0 +1,11 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference 
+        android:key="@string/pref_interval_key" 
+        android:title="@string/pref_checkin_interval" 
+        android:summary="@string/pref_checkin_interval_summary"
+        android:dialogTitle="@string/pref_checkin_interval"
+        android:entries="@array/pref_checkin_interval_descriptions"
+        android:entryValues="@array/pref_checkin_intervals"
+        android:defaultValue="@string/pref_default_checkin_interval">
+    </ListPreference>
+</PreferenceScreen>

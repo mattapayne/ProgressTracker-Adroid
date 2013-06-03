@@ -1,0 +1,39 @@
+<resources>
+
+    <string name="app_name">ca.mattpayne.progresstracker</string>
+    <string name="service_name">Progress Tracker Service</string>
+    <string name="checkin_url">http://progresstracker.herokuapp.com/api/checkin/create</string>
+    <string name="delete_all_checkin_url">http://progresstracker.herokuapp.com/api/checkins</string>
+    <string name="delete_some_checkin_url">http://progresstracker.herokuapp.com/api/checkins</string>
+    <string name="get_checkins_url">http://progresstracker.herokuapp.com/api/checkins</string>
+    <string name="pref_checkin_interval">Checkin Interval</string>
+    <string name="pref_checkin_interval_summary">The interval between which checkins are performed</string>
+    <string name="btn_deleteAll">Delete All</string>
+    <string name="btn_deleteSome">Delete Some</string>
+    <string name="btn_showCheckins">Show Checkins</string>
+    <string name="deleted_all_checkins_message_text">Successfully deleted all checkins.</string>
+    <string name="deleted_all_checkins_dialog_title">Success!!</string>
+    <string name="deleted_some_checkins_message_text">Successfully deleted oldest {number} checkins.</string>
+    <string name="deleted_some_checkins_dialog_title">Success!!</string>
+    <string name="show_checkins_dialog_title">Checkins</string>
+    <string-array name="pref_checkin_interval_descriptions">
+        <item >1 Minute</item>
+        <item >5 Minutes</item>
+        <item >15 Minutes</item>
+        <item >30 Minutes</item>
+        <item >45 Minutes</item>
+        <item >1 Hour</item>
+    </string-array>
+    <string name="pref_default_checkin_interval">1</string>
+    <string-array name="pref_checkin_intervals">
+      	<item >1</item>
+      	<item >5</item>
+        <item >15</item>
+        <item >30</item>
+        <item >45</item>
+        <item >60</item>
+    </string-array>
+    <string name="set_preferences">Set Preferences</string>
+    <string name="pref_interval_key">pref_interval</string>
+
+</resources>
