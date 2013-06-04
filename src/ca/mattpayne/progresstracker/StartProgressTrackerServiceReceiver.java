@@ -8,7 +8,7 @@ public class StartProgressTrackerServiceReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		Intent service = new Intent(context, ProgressTrackerService.class);
+		final Intent service = new Intent(context, ProgressTrackerService.class);
 		context.startService(service);
 	}
 }

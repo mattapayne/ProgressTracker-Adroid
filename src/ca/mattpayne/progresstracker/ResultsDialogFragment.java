@@ -10,8 +10,8 @@ import android.widget.TextView;
 public class ResultsDialogFragment extends DialogFragment {
 	
 	public static ResultsDialogFragment newInstance(String title, String message) {
-		ResultsDialogFragment frag = new ResultsDialogFragment();
-        Bundle args = new Bundle();
+		final ResultsDialogFragment frag = new ResultsDialogFragment();
+		final Bundle args = new Bundle();
         args.putString("message", message);
         args.putString("title", title);
         frag.setArguments(args);
@@ -30,11 +30,11 @@ public class ResultsDialogFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState)
 	{
-		String title = getArguments().getString("title");
+		final String title = getArguments().getString("title");
 		getDialog().setTitle(title);
-		String message = getArguments().getString("message");
-		View v = inflater.inflate(R.layout.dialog, container, false);
-		TextView messageArea = (TextView)v.findViewById(R.id.txtDialogMessage);
+		final String message = getArguments().getString("message");
+		final View v = inflater.inflate(R.layout.dialog, container, false);
+		final TextView messageArea = (TextView)v.findViewById(R.id.txtDialogMessage);
 		messageArea.setText(message);
 		return v;
 	}

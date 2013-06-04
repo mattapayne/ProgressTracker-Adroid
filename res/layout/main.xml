@@ -36,4 +36,16 @@
         android:layout_height="wrap_content"
         android:text="@string/btn_showCheckins" />
 
+    <Button
+        android:id="@+id/btnSendDistressAlert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_sendDistressAlert" />
+
+    <Button
+        android:id="@+id/btnClearDistressAlerts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_clearDistressAlert" />
+
 </LinearLayout>

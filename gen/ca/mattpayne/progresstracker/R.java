@@ -18,40 +18,58 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int btnDeleteAll=0x7f070002;
-        public static final int btnDeleteSome=0x7f070004;
-        public static final int btnShowCheckins=0x7f070005;
-        public static final int preferences_menu_item=0x7f070006;
-        public static final int txtCurrentSettings=0x7f070001;
+        public static final int btnClearDistressAlerts=0x7f07000b;
+        public static final int btnDeleteAll=0x7f070006;
+        public static final int btnDeleteSome=0x7f070008;
+        public static final int btnSend=0x7f070004;
+        public static final int btnSendDistressAlert=0x7f07000a;
+        public static final int btnShowCheckins=0x7f070009;
+        public static final int lblMessage=0x7f070002;
+        public static final int linearLayout=0x7f070001;
+        public static final int preferences_menu_item=0x7f07000c;
+        public static final int txtCurrentSettings=0x7f070005;
         public static final int txtDialogMessage=0x7f070000;
-        public static final int txtNumberToDelete=0x7f070003;
+        public static final int txtMessage=0x7f070003;
+        public static final int txtNumberToDelete=0x7f070007;
     }
     public static final class layout {
         public static final int dialog=0x7f030000;
-        public static final int main=0x7f030001;
-        public static final int menu=0x7f030002;
-        public static final int preferences=0x7f030003;
+        public static final int distress_alert=0x7f030001;
+        public static final int main=0x7f030002;
+        public static final int menu=0x7f030003;
+        public static final int preferences=0x7f030004;
     }
     public static final class string {
         public static final int app_name=0x7f040000;
-        public static final int btn_deleteAll=0x7f040008;
-        public static final int btn_deleteSome=0x7f040009;
-        public static final int btn_showCheckins=0x7f04000a;
+        public static final int btn_clearDistressAlert=0x7f04000e;
+        public static final int btn_deleteAll=0x7f04000a;
+        public static final int btn_deleteSome=0x7f04000b;
+        public static final int btn_sendDistressAlert=0x7f04000d;
+        public static final int btn_sendDistressAlertOnSendActivity=0x7f040019;
+        public static final int btn_showCheckins=0x7f04000c;
         public static final int checkin_url=0x7f040002;
+        public static final int clear_distress_alert_dialog_title=0x7f040015;
+        public static final int clear_distress_alert_message_text=0x7f040016;
+        public static final int create_distress_alert_url=0x7f040006;
         public static final int delete_all_checkin_url=0x7f040003;
+        public static final int delete_distress_alert_url=0x7f040005;
         public static final int delete_some_checkin_url=0x7f040004;
-        public static final int deleted_all_checkins_dialog_title=0x7f04000c;
-        public static final int deleted_all_checkins_message_text=0x7f04000b;
-        public static final int deleted_some_checkins_dialog_title=0x7f04000e;
-        public static final int deleted_some_checkins_message_text=0x7f04000d;
-        public static final int get_checkins_url=0x7f040005;
-        public static final int pref_checkin_interval=0x7f040006;
-        public static final int pref_checkin_interval_summary=0x7f040007;
-        public static final int pref_default_checkin_interval=0x7f040010;
-        public static final int pref_interval_key=0x7f040012;
+        public static final int deleted_all_checkins_dialog_title=0x7f040010;
+        public static final int deleted_all_checkins_message_text=0x7f04000f;
+        public static final int deleted_some_checkins_dialog_title=0x7f040012;
+        public static final int deleted_some_checkins_message_text=0x7f040011;
+        public static final int distress_alert_message_label=0x7f040018;
+        public static final int get_checkins_url=0x7f040007;
+        public static final int pref_checkin_interval=0x7f040008;
+        public static final int pref_checkin_interval_summary=0x7f040009;
+        public static final int pref_default_checkin_interval=0x7f04001a;
+        public static final int pref_interval_key=0x7f04001c;
+        public static final int send_distress_alert_activity_label=0x7f04001d;
+        public static final int sent_distress_alert_dialog_title=0x7f040013;
+        public static final int sent_distress_alert_message_text=0x7f040014;
         public static final int service_name=0x7f040001;
-        public static final int set_preferences=0x7f040011;
-        public static final int show_checkins_dialog_title=0x7f04000f;
+        public static final int set_preferences=0x7f04001b;
+        public static final int show_checkins_dialog_title=0x7f040017;
     }
     public static final class style {
         /** 

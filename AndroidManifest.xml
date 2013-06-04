@@ -24,6 +24,7 @@
             </intent-filter>
         </activity>
 		<activity android:name=".SettingsActivity" android:label="@string/set_preferences"></activity>
+		<activity android:name=".SendDistressAlertActivity" android:label="@string/send_distress_alert_activity_label"></activity>
         <service
             android:name=".ProgressTrackerService"
             android:icon="@drawable/ic_launcher"
