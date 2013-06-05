@@ -1,7 +1,8 @@
 package ca.mattpayne.progresstracker;
 
 import ca.mattpayne.progresstracker.asynctasks.SendDistressAlertTask;
-import ca.mattpayne.progresstracker.helpers.LocationHelper;
+import ca.mattpayne.progresstracker.helpers.ConnectivityHelperImpl;
+import ca.mattpayne.progresstracker.helpers.LocationHelperImpl;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
@@ -29,7 +30,8 @@ public class SendDistressAlertActivity extends Activity {
 			public void onClick(View v) {
 				
 				new SendDistressAlertTask(SendDistressAlertActivity.this, 
-						new LocationHelper(getApplicationContext()), 
+						new LocationHelperImpl(getBaseContext()), 
+						new ConnectivityHelperImpl(getBaseContext()),
 						txtMessage.getText().toString()).
 						execute(getString(R.string.create_distress_alert_url));
 			}

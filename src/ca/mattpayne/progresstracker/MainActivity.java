@@ -5,7 +5,11 @@ import ca.mattpayne.progresstracker.asynctasks.DeleteAllCheckinsTask;
 import ca.mattpayne.progresstracker.asynctasks.DeleteSomeCheckinsTask;
 import ca.mattpayne.progresstracker.asynctasks.ShowCheckinsTask;
 import ca.mattpayne.progresstracker.helpers.AlarmHelper;
+import ca.mattpayne.progresstracker.helpers.AlarmHelperImpl;
+import ca.mattpayne.progresstracker.helpers.ConnectivityHelper;
+import ca.mattpayne.progresstracker.helpers.ConnectivityHelperImpl;
 import ca.mattpayne.progresstracker.helpers.PreferencesHelper;
+import ca.mattpayne.progresstracker.helpers.PreferencesHelperImpl;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,14 +25,32 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity implements OnSharedPreferenceChangeListener  {
 
+	private AlarmHelper _alarmHelper;
+	private PreferencesHelper _preferencesHelper;
+	private ConnectivityHelper _connectivityHelper;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		_alarmHelper = new AlarmHelperImpl(getBaseContext());
+		_preferencesHelper = new PreferencesHelperImpl(getBaseContext());
+		_connectivityHelper = new ConnectivityHelperImpl(getBaseContext());
 		super.onCreate(savedInstanceState);
-		
 		setContentView(R.layout.main);
 		PreferenceManager.setDefaultValues(this, R.layout.preferences, false);
 		setupDisplay();
-		AlarmHelper.setAlarm(getBaseContext(), PreferencesHelper.getCheckinInterval(getBaseContext()));
+		_alarmHelper.setAlarm(_preferencesHelper.getCheckinInterval());
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		PreferenceManager.getDefaultSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(this);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
 	}
 
 	@Override
@@ -49,24 +71,25 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences arg0, String arg1) {
-		setupDisplay();
-		AlarmHelper.setAlarm(getBaseContext(), PreferencesHelper.getCheckinInterval(getBaseContext()));
+		setIntervalDisplay();
+		_alarmHelper.setAlarm(_preferencesHelper.getCheckinInterval());
 	}
 	
-	private void setupDisplay() {
+	private void setIntervalDisplay() {
 		final TextView txt = (TextView)findViewById(R.id.txtCurrentSettings);
-
-		final SharedPreferences prefs = PreferenceManager
-				.getDefaultSharedPreferences(this);
-		final String interval = prefs.getString(
-				getString(R.string.pref_interval_key), "");
+		String interval = _preferencesHelper.getCheckinIntervalDescription();
 		txt.setText("Current checkin interval is: " + interval + " minutes");
+	}
+
+	private void setupDisplay() {
+		setIntervalDisplay();
 		
 		final Button btnDeleteAll = (Button)findViewById(R.id.btnDeleteAll);
 		btnDeleteAll.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				new DeleteAllCheckinsTask(MainActivity.this).execute(getString(R.string.delete_all_checkin_url));
+				new DeleteAllCheckinsTask(MainActivity.this, _connectivityHelper).
+				execute(getString(R.string.delete_all_checkin_url));
 			}});
 		
 		final Button btnDeleteSome = (Button)findViewById(R.id.btnDeleteSome);
@@ -77,7 +100,8 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 			@Override
 			public void onClick(View v) {
 				int numberToDelete = Integer.valueOf(numberToDeleteView.getText().toString());
-				new DeleteSomeCheckinsTask(MainActivity.this, numberToDelete).execute(getString(R.string.delete_some_checkin_url));
+				new DeleteSomeCheckinsTask(MainActivity.this, _connectivityHelper, numberToDelete).
+				execute(getString(R.string.delete_some_checkin_url));
 			}
 		});
 		
@@ -86,7 +110,8 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 			
 			@Override
 			public void onClick(View arg0) {
-				new ShowCheckinsTask(MainActivity.this).execute(getString(R.string.get_checkins_url));
+				new ShowCheckinsTask(MainActivity.this, _connectivityHelper).
+				execute(getString(R.string.get_checkins_url));
 			}
 		});
 		
@@ -104,7 +129,8 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 			
 			@Override
 			public void onClick(View v) {
-				new ClearDistressAlertTask(MainActivity.this).execute(getString(R.string.delete_distress_alert_url));
+				new ClearDistressAlertTask(MainActivity.this, _connectivityHelper).
+					execute(getString(R.string.delete_distress_alert_url));
 			}
 		});
 	}

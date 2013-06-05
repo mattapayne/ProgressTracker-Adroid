@@ -5,14 +5,15 @@ import java.util.List;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import ca.mattpayne.progresstracker.R;
+import ca.mattpayne.progresstracker.helpers.ConnectivityHelper;
 import android.app.Activity;
 
-public class DeleteSomeCheckinsTask extends AbstractHttpPostingWithResultAsyncTask {
+public class DeleteSomeCheckinsTask extends AbtractHttpPostingWithResultAsyncTask {
 
 	private final int _count;
 
-	public DeleteSomeCheckinsTask(Activity activity, int count) {
-		super(activity);
+	public DeleteSomeCheckinsTask(Activity activity, ConnectivityHelper connectivityHelper, int count) {
+		super(activity, connectivityHelper);
 		_count = count;
 	}
 

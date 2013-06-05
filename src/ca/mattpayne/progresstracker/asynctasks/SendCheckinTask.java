@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -16,6 +15,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import ca.mattpayne.progresstracker.R;
+import ca.mattpayne.progresstracker.helpers.ConnectivityHelper;
 import ca.mattpayne.progresstracker.helpers.LocationHelper;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -23,12 +23,14 @@ import android.util.Log;
 
 public class SendCheckinTask extends AsyncTask<Void, Void, Void> {
 	
+	private final ConnectivityHelper _connectivityHelper;
 	private final LocationHelper _locationHelper;
 	private final Context _context;
 	
-	public SendCheckinTask(Context context, LocationHelper locationHelper)
+	public SendCheckinTask(Context context, LocationHelper locationHelper, ConnectivityHelper connectivityHelper)
 	{
 		_locationHelper = locationHelper;
+		_connectivityHelper = connectivityHelper;
 		_context = context;
 	}
 	
@@ -38,17 +40,22 @@ public class SendCheckinTask extends AsyncTask<Void, Void, Void> {
 		
 		try {
 			
-			if (_locationHelper.canGetLocation()) {
-
-				final double lat = _locationHelper.getLatitude();
-				final double lng = _locationHelper.getLongitude();
-
-				if (_locationHelper.isNetworkEnabled()) {
+			if(_connectivityHelper.isConnected())
+			{
+				if (_locationHelper.canGetLocation()) {
+	
+					final double lat = _locationHelper.getLatitude();
+					final double lng = _locationHelper.getLongitude();
 					post(lat, lng, url);
-				} 
-				else {
-					Log.i("PostLocationTask","Network not enabled. Can't post.");
 				}
+				else
+				{
+					Log.i("PostLocationTask", "Can't get location. Not bothering to post.");
+				}
+			}
+			else
+			{
+				Log.i("PostLocationTask", "No connectivity. Can't post.");
 			}
 		} catch (Exception e) {
 			Log.e("PostLocationTask", e.getMessage());

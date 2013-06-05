@@ -17,40 +17,51 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 import ca.mattpayne.progresstracker.R;
 import ca.mattpayne.progresstracker.ResultsDialogFragment;
+import ca.mattpayne.progresstracker.helpers.ConnectivityHelper;
 import ca.mattpayne.progresstracker.models.Checkin;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.AsyncTask;
+import android.util.Log;
 
 public class ShowCheckinsTask extends AsyncTask<String, Void, List<Checkin>> {
 
 	private final Activity _activity;
+	private final ConnectivityHelper _connectivityHelper;
 	
-	public ShowCheckinsTask(Activity activity)
+	public ShowCheckinsTask(Activity activity, ConnectivityHelper connectivityHelper)
 	{
 		_activity = activity;
+		_connectivityHelper = connectivityHelper;
 	}
 	
 	@Override
 	protected List<Checkin> doInBackground(String... params) {
 		List<Checkin> checkins = null;
 		
-		if (params != null && params.length > 0) {
-			final HttpClient client = new DefaultHttpClient();
-			final HttpGet get = new HttpGet(params[0]);
-
-			try
-			{
-				final HttpResponse response = client.execute(get);
-				checkins = processResponse(response);
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
-			} catch (ClientProtocolException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
+		if(_connectivityHelper.isConnected())
+		{
+			if (params != null && params.length > 0) {
+				final HttpClient client = new DefaultHttpClient();
+				final HttpGet get = new HttpGet(params[0]);
+	
+				try
+				{
+					final HttpResponse response = client.execute(get);
+					checkins = processResponse(response);
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				} catch (ClientProtocolException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
+		}
+		else
+		{
+			Log.i("ShowCheckinsTask", "No connectivity. Cannot get checkins.");
 		}
 		
 		return checkins;

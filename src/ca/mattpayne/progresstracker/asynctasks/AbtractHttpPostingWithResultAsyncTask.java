@@ -10,18 +10,22 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import ca.mattpayne.progresstracker.ResultsDialogFragment;
+import ca.mattpayne.progresstracker.helpers.ConnectivityHelper;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.AsyncTask;
+import android.util.Log;
 
-public abstract class AbstractHttpPostingWithResultAsyncTask extends AsyncTask<String, Void, Void> {
+public abstract class AbtractHttpPostingWithResultAsyncTask extends AsyncTask<String, Void, Void> {
 
 	private final Activity _activity;
+	private final ConnectivityHelper _connectivityHelper;
 	
-	protected AbstractHttpPostingWithResultAsyncTask(Activity activity)
+	protected AbtractHttpPostingWithResultAsyncTask(Activity activity, ConnectivityHelper connectivityHelper)
 	{
 		_activity = activity;
+		_connectivityHelper = connectivityHelper;
 	}
 	
 	protected abstract List<NameValuePair> getPostParameters();
@@ -35,21 +39,28 @@ public abstract class AbstractHttpPostingWithResultAsyncTask extends AsyncTask<S
 	
 	@Override
 	protected Void doInBackground(String... params) {
-		if (params != null && params.length > 0) {
-			final HttpClient client = new DefaultHttpClient();
-			final HttpPost post = new HttpPost(params[0]);
-			final List<NameValuePair> parameters = getPostParameters();
-			
-			try {
-				post.setEntity(new UrlEncodedFormEntity(parameters));
-				client.execute(post);
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
-			} catch (ClientProtocolException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		if(_connectivityHelper.isConnected())
+		{
+			if (params != null && params.length > 0) {
+				final HttpClient client = new DefaultHttpClient();
+				final HttpPost post = new HttpPost(params[0]);
+				final List<NameValuePair> parameters = getPostParameters();
+				
+				try {
+					post.setEntity(new UrlEncodedFormEntity(parameters));
+					client.execute(post);
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				} catch (ClientProtocolException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}	
+		}
+		else
+		{
+			Log.i(this.getClass().getName(), "No connectivity. Not posting.");
 		}
 
 		return null;

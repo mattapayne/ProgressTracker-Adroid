@@ -8,17 +8,19 @@ import java.util.Locale;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
-import ca.mattpayne.progresstracker.helpers.LocationHelper;
+
+import ca.mattpayne.progresstracker.helpers.ConnectivityHelper;
+import ca.mattpayne.progresstracker.helpers.LocationHelperImpl;
 import android.app.Activity;
 
-public class SendDistressAlertTask extends AbstractHttpPostingWithResultAsyncTask {
+public class SendDistressAlertTask extends AbtractHttpPostingWithResultAsyncTask {
 
 	private final String _message;
-	private final LocationHelper _locationHelper;
+	private final LocationHelperImpl _locationHelper;
 	
-	public SendDistressAlertTask(Activity activity, LocationHelper locationHelper, String message)
+	public SendDistressAlertTask(Activity activity, LocationHelperImpl locationHelper, ConnectivityHelper connectivityHelper, String message)
 	{
-		super(activity);
+		super(activity, connectivityHelper);
 		_message = message;
 		_locationHelper = locationHelper;
 	}
