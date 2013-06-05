@@ -19,7 +19,7 @@ public class AlarmHelperImpl implements AlarmHelper
 	
 	public void setAlarm(int intervalInMilliseconds)
 	{
-		Log.i("AlarmHelperImpl", "Setting alarm for interval: " + String.valueOf(intervalInMilliseconds));
+		Log.i(this.getClass().getName(), "Setting alarm for interval: " + String.valueOf(intervalInMilliseconds));
 		
 		final Intent intent = new Intent(_context, StartProgressTrackerServiceReceiver.class);
 		final PendingIntent pendingIntent = PendingIntent.getBroadcast(_context, 0, intent,

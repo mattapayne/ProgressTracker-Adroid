@@ -1,21 +1,18 @@
 package ca.mattpayne.progresstracker.asynctasks;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
-import ca.mattpayne.progresstracker.ResultsDialogFragment;
-import ca.mattpayne.progresstracker.helpers.ConnectivityHelper;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.AsyncTask;
 import android.util.Log;
+import ca.mattpayne.progresstracker.ResultsDialogFragment;
+import ca.mattpayne.progresstracker.helpers.ConnectivityHelper;
 
 public abstract class AbtractHttpPostingWithResultAsyncTask extends AsyncTask<String, Void, Void> {
 
@@ -49,12 +46,9 @@ public abstract class AbtractHttpPostingWithResultAsyncTask extends AsyncTask<St
 				try {
 					post.setEntity(new UrlEncodedFormEntity(parameters));
 					client.execute(post);
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				} catch (ClientProtocolException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
+				} 
+				catch (Exception e) {
+					Log.e(this.getClass().getName(), e.getMessage());
 				}
 			}	
 		}

@@ -1,25 +1,22 @@
 package ca.mattpayne.progresstracker.asynctasks;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import ca.mattpayne.progresstracker.R;
-import ca.mattpayne.progresstracker.helpers.ConnectivityHelper;
-import ca.mattpayne.progresstracker.helpers.LocationHelper;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import ca.mattpayne.progresstracker.R;
+import ca.mattpayne.progresstracker.helpers.ApplicationHelper;
+import ca.mattpayne.progresstracker.helpers.ConnectivityHelper;
+import ca.mattpayne.progresstracker.helpers.LocationHelper;
 
 public class SendCheckinTask extends AsyncTask<Void, Void, Void> {
 	
@@ -57,8 +54,10 @@ public class SendCheckinTask extends AsyncTask<Void, Void, Void> {
 			{
 				Log.i("PostLocationTask", "No connectivity. Can't post.");
 			}
-		} catch (Exception e) {
-			Log.e("PostLocationTask", e.getMessage());
+		} 
+		catch (Exception e) 
+		{
+			Log.e(this.getClass().getName(), e.getMessage());
 		}
 
 		return null;
@@ -68,7 +67,7 @@ public class SendCheckinTask extends AsyncTask<Void, Void, Void> {
 		final HttpClient httpClient = new DefaultHttpClient();
 		final HttpPost post = new HttpPost(url);
 		final Date currentDate = new Date();
-		final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CANADA);
+		final SimpleDateFormat dateFormat = ApplicationHelper.getDateFormat();
 		final String date = dateFormat.format(currentDate);
 		
 		final List<NameValuePair> parameters = new ArrayList<NameValuePair>();
@@ -81,13 +80,9 @@ public class SendCheckinTask extends AsyncTask<Void, Void, Void> {
 		try {
 			post.setEntity(new UrlEncodedFormEntity(parameters));
 			httpClient.execute(post);
-		} catch (UnsupportedEncodingException e) {
-
-			e.printStackTrace();
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		} 
+		catch (Exception e) {
+			Log.e(this.getClass().getName(), e.getMessage());
+		} 
 	}
 }

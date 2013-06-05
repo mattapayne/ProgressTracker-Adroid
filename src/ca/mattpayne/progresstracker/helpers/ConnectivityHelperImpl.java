@@ -14,9 +14,9 @@ public class ConnectivityHelperImpl implements ConnectivityHelper {
 
 	@Override
 	public boolean isConnected() {
-		ConnectivityManager cm = (ConnectivityManager) _context
+		final ConnectivityManager cm = (ConnectivityManager) _context
 				.getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo netInfo = cm.getActiveNetworkInfo();
+		final NetworkInfo netInfo = cm.getActiveNetworkInfo();
 		if (netInfo != null && netInfo.isConnectedOrConnecting()) {
 			return true;
 		}

@@ -1,34 +1,33 @@
 package ca.mattpayne.progresstracker.asynctasks;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
-import ca.mattpayne.progresstracker.R;
-import ca.mattpayne.progresstracker.ResultsDialogFragment;
-import ca.mattpayne.progresstracker.helpers.ConnectivityHelper;
-import ca.mattpayne.progresstracker.models.Checkin;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.AsyncTask;
 import android.util.Log;
+import ca.mattpayne.progresstracker.R;
+import ca.mattpayne.progresstracker.ResultsDialogFragment;
+import ca.mattpayne.progresstracker.helpers.ConnectivityHelper;
+import ca.mattpayne.progresstracker.models.Checkin;
 
 public class ShowCheckinsTask extends AsyncTask<String, Void, List<Checkin>> {
 
 	private final Activity _activity;
 	private final ConnectivityHelper _connectivityHelper;
+	private static final String LongitudeKey = "longitude";
+	private static final String LatitudeKey = "latitude";
+	private static final String CheckinDateKey = "checkin_date";
 	
 	public ShowCheckinsTask(Activity activity, ConnectivityHelper connectivityHelper)
 	{
@@ -50,25 +49,22 @@ public class ShowCheckinsTask extends AsyncTask<String, Void, List<Checkin>> {
 				{
 					final HttpResponse response = client.execute(get);
 					checkins = processResponse(response);
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				} catch (ClientProtocolException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				} 
+				catch (Exception e) {
+					Log.e(this.getClass().getName(), e.getMessage());
+				} 
 			}
 		}
 		else
 		{
-			Log.i("ShowCheckinsTask", "No connectivity. Cannot get checkins.");
+			Log.i(this.getClass().getName(), "No connectivity. Cannot get checkins.");
 		}
 		
 		return checkins;
 	}
 	
 	@Override
-	protected void onPostExecute(List<Checkin> result) {
+	protected void onPostExecute(final List<Checkin> result) {
 		final FragmentTransaction ft = _activity.getFragmentManager()
 				.beginTransaction();
 		final Fragment prev = _activity.getFragmentManager().findFragmentByTag(
@@ -103,8 +99,9 @@ public class ShowCheckinsTask extends AsyncTask<String, Void, List<Checkin>> {
 		frag.show(ft, "dialog");
 	}
 
-	private List<Checkin> processResponse(HttpResponse response) {
-		List<Checkin> checkins = new ArrayList<Checkin>();
+	private List<Checkin> processResponse(final HttpResponse response) {
+		
+		final List<Checkin> checkins = new ArrayList<Checkin>();
 		
 		try {
 			
@@ -121,23 +118,17 @@ public class ShowCheckinsTask extends AsyncTask<String, Void, List<Checkin>> {
 			for(int i=0; i<json.length(); i++)
 			{
 				final JSONObject item = json.getJSONObject(i);
-				final Checkin checkin = new Checkin();
-				checkin.CheckinDate = item.getString("checkin_date");
-				checkin.Latitude = item.getString("latitude");
-				checkin.Longitude = item.getString("longitude");
 				
+				final Checkin checkin = new Checkin(item.getString(LongitudeKey), 
+						item.getString(LatitudeKey), 
+						item.getString(CheckinDateKey));
 				checkins.add(checkin);
 			}
 			
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		} catch (IllegalStateException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
+		} 
+		catch (Exception e) {
+			Log.e(this.getClass().getName(), e.getMessage());
+		} 
 		
 		return checkins;
 	}

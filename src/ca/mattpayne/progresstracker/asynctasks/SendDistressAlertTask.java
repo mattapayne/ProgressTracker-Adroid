@@ -4,11 +4,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
-
+import ca.mattpayne.progresstracker.helpers.ApplicationHelper;
 import ca.mattpayne.progresstracker.helpers.ConnectivityHelper;
 import ca.mattpayne.progresstracker.helpers.LocationHelperImpl;
 import android.app.Activity;
@@ -37,7 +35,7 @@ public class SendDistressAlertTask extends AbtractHttpPostingWithResultAsyncTask
 		final double longitude = _locationHelper.getLongitude();
 		
 		final Date currentDate = new Date();
-		final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CANADA);
+		final SimpleDateFormat dateFormat = ApplicationHelper.getDateFormat();
 		final String date = dateFormat.format(currentDate);
 		
 		final List<NameValuePair> args = new ArrayList<NameValuePair>();

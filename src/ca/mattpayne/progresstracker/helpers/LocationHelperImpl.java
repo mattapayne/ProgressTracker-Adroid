@@ -60,7 +60,7 @@ public class LocationHelperImpl implements LocationHelper {
 					.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 			
 			if (!_isGPSEnabled && !_isNetworkEnabled) {
-				Log.i("LocationHelper", "Unable to get location information via either GPS or network.");
+				Log.i(this.getClass().getName(), "Unable to get location information via either GPS or network.");
 			} 
 			else {
 				this._canGetLocation = true;
@@ -76,7 +76,7 @@ public class LocationHelperImpl implements LocationHelper {
 				}
 				else
 				{
-					Log.i("LocationHelper", "Network is NOT enabled.");
+					Log.i(this.getClass().getName(), "Network is NOT enabled.");
 				}
 				if (_isGPSEnabled) {
 					if (_location == null) {
@@ -92,13 +92,13 @@ public class LocationHelperImpl implements LocationHelper {
 				}
 				else
 				{
-					Log.i("LocationHelper", "GPS is NOT enabled.");
+					Log.i(this.getClass().getName(), "GPS is NOT enabled.");
 				}
 			}
 
 		} 
 		catch (Exception e) {
-			e.printStackTrace();
+			Log.e(this.getClass().getName(), e.getMessage());
 		}
 	}
 }

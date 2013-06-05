@@ -1,9 +1,16 @@
 package ca.mattpayne.progresstracker.models;
 
 public class Checkin {
-	public String Longitude;
-	public String Latitude;
-	public String CheckinDate;
+	public final String Longitude;
+	public final String Latitude;
+	public final String CheckinDate;
+	
+	public Checkin(String longitude, String latitude, String checkinDate)
+	{
+		Longitude = longitude;
+		Latitude = latitude;
+		CheckinDate = checkinDate;
+	}
 	
 	public String getDescription()
 	{

@@ -19,11 +19,8 @@ public class SendDistressAlertActivity extends Activity {
 	}
 
 	private void setupView() {
-		
 		final TextView txtMessage = (TextView)findViewById(R.id.txtMessage);
-		
 		final Button btnSend = (Button)findViewById(R.id.btnSend);
-		
 		btnSend.setOnClickListener(new View.OnClickListener() {
 			
 			@Override

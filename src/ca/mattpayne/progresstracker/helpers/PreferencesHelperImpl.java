@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 public class PreferencesHelperImpl implements PreferencesHelper {
 
 	private final Context _context;
+	private static final String DefaultInterval = "15";
 	
 	public PreferencesHelperImpl(Context context)
 	{
@@ -16,7 +17,7 @@ public class PreferencesHelperImpl implements PreferencesHelper {
 	
 	public int getCheckinInterval()
 	{
-		String selectedInterval = getCheckinIntervalDescription();
+		final String selectedInterval = getCheckinIntervalDescription();
 		final int minutes = Integer.parseInt(selectedInterval);
 		return minutes * 60 * 1000;
 	}
@@ -26,6 +27,6 @@ public class PreferencesHelperImpl implements PreferencesHelper {
 		final SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(_context);
 		
-		return prefs.getString(_context.getString(R.string.pref_interval_key), "15");
+		return prefs.getString(_context.getString(R.string.pref_interval_key), DefaultInterval);
 	}
 }

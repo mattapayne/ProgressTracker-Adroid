@@ -12,8 +12,8 @@ public class ScheduleReceiver extends BroadcastReceiver {
 	
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		AlarmHelper alarmHelper = new AlarmHelperImpl(context);
-		PreferencesHelper preferencesHelper = new PreferencesHelperImpl(context);
+		final AlarmHelper alarmHelper = new AlarmHelperImpl(context);
+		final PreferencesHelper preferencesHelper = new PreferencesHelperImpl(context);
 		alarmHelper.setAlarm(preferencesHelper.getCheckinInterval());
 	}
 }

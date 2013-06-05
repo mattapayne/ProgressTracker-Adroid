@@ -31,26 +31,15 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		
 		_alarmHelper = new AlarmHelperImpl(getBaseContext());
 		_preferencesHelper = new PreferencesHelperImpl(getBaseContext());
 		_connectivityHelper = new ConnectivityHelperImpl(getBaseContext());
-		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		PreferenceManager.setDefaultValues(this, R.layout.preferences, false);
-		setupDisplay();
 		_alarmHelper.setAlarm(_preferencesHelper.getCheckinInterval());
-	}
-
-	@Override
-	protected void onPause() {
-		super.onPause();
-		PreferenceManager.getDefaultSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(this);
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
+		setupDisplay();
 	}
 
 	@Override
