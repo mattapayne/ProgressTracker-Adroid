@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity implements OnSharedPreferenceChangeListener  {
 
@@ -38,7 +39,6 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 		_connectivityHelper = new ConnectivityHelperImpl(getBaseContext());
 		setContentView(R.layout.main);
 		PreferenceManager.setDefaultValues(this, R.layout.preferences, false);
-		_alarmHelper.setAlarm(_preferencesHelper.getCheckinInterval());
 		setupDisplay();
 	}
 
@@ -69,6 +69,11 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 		String interval = _preferencesHelper.getCheckinIntervalDescription();
 		txt.setText("Current checkin interval is: " + interval + " minutes");
 	}
+	
+	private void showInvalidNumberSelectionToast()
+	{
+		Toast.makeText(this, "You must enter a number.",Toast.LENGTH_SHORT).show();
+	}
 
 	private void setupDisplay() {
 		setIntervalDisplay();
@@ -88,9 +93,17 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 			
 			@Override
 			public void onClick(View v) {
-				int numberToDelete = Integer.valueOf(numberToDeleteView.getText().toString());
-				new DeleteSomeCheckinsTask(MainActivity.this, _connectivityHelper, numberToDelete).
-				execute(getString(R.string.delete_some_checkin_url));
+				try
+				{
+					int numberToDelete = Integer.valueOf(numberToDeleteView.getText().toString().trim());
+					new DeleteSomeCheckinsTask(MainActivity.this, _connectivityHelper, numberToDelete).
+						execute(getString(R.string.delete_some_checkin_url));
+				}
+				catch(NumberFormatException nfe)
+				{
+					showInvalidNumberSelectionToast();
+					return;
+				}
 			}
 		});
 		

@@ -1,9 +1,10 @@
 package ca.mattpayne.progresstracker.helpers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationManager;
-import android.util.Log;
 
 public class LocationHelperImpl implements LocationHelper {
 	private LocationManager _locationManager;
@@ -15,10 +16,15 @@ public class LocationHelperImpl implements LocationHelper {
 	private double _latitude;
 	private double _longitude;
 	
+	private static final Logger Logger = LoggerFactory.getLogger(LocationHelperImpl.class);
+
+	
 	public LocationHelperImpl(Context context)
 	{
 		_context = context;
 		initialize();
+		_latitude = NOT_SET;
+		_longitude = NOT_SET;
 	}
 	
 	public double getLatitude()
@@ -60,7 +66,7 @@ public class LocationHelperImpl implements LocationHelper {
 					.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 			
 			if (!_isGPSEnabled && !_isNetworkEnabled) {
-				Log.i(this.getClass().getName(), "Unable to get location information via either GPS or network.");
+				Logger.info("GPS is NOT enabled AND Network is NOT enabled.");
 			} 
 			else {
 				this._canGetLocation = true;
@@ -76,7 +82,7 @@ public class LocationHelperImpl implements LocationHelper {
 				}
 				else
 				{
-					Log.i(this.getClass().getName(), "Network is NOT enabled.");
+					Logger.info("Network is NOT enabled.");
 				}
 				if (_isGPSEnabled) {
 					if (_location == null) {
@@ -92,13 +98,13 @@ public class LocationHelperImpl implements LocationHelper {
 				}
 				else
 				{
-					Log.i(this.getClass().getName(), "GPS is NOT enabled.");
+					Logger.info("GPS is NOT enabled.");
 				}
 			}
 
 		} 
 		catch (Exception e) {
-			Log.e(this.getClass().getName(), e.getMessage());
+			Logger.error(e.getMessage());
 		}
 	}
 }

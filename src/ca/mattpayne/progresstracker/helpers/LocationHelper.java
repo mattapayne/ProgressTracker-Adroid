@@ -6,4 +6,6 @@ public interface LocationHelper {
 	double getLatitude();
 	boolean isLocationServicesGPSEnabled();
 	boolean isLocationServicesNetworkEnabled();
+	
+	public double NOT_SET = -1;
 }

@@ -57,4 +57,9 @@ public class SendDistressAlertTask extends AbtractHttpPostingWithResultAsyncTask
 	protected String getDialogMessage() {
 		return null;
 	}
+
+	@Override
+	protected String getActionName() {
+		return "Send distress message.";
+	}
 }

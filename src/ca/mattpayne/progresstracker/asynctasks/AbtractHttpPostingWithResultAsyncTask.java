@@ -6,11 +6,12 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.AsyncTask;
-import android.util.Log;
 import ca.mattpayne.progresstracker.ResultsDialogFragment;
 import ca.mattpayne.progresstracker.helpers.ConnectivityHelper;
 
@@ -18,6 +19,8 @@ public abstract class AbtractHttpPostingWithResultAsyncTask extends AsyncTask<St
 
 	private final Activity _activity;
 	private final ConnectivityHelper _connectivityHelper;
+	
+	private static final Logger Logger = LoggerFactory.getLogger(AbtractHttpPostingWithResultAsyncTask.class);
 	
 	protected AbtractHttpPostingWithResultAsyncTask(Activity activity, ConnectivityHelper connectivityHelper)
 	{
@@ -28,6 +31,7 @@ public abstract class AbtractHttpPostingWithResultAsyncTask extends AsyncTask<St
 	protected abstract List<NameValuePair> getPostParameters();
 	protected abstract String getDialogTitle();
 	protected abstract String getDialogMessage();
+	protected abstract String getActionName();
 	
 	protected boolean showsDialogAfterComplete()
 	{
@@ -39,6 +43,9 @@ public abstract class AbtractHttpPostingWithResultAsyncTask extends AsyncTask<St
 		if(_connectivityHelper.isConnected())
 		{
 			if (params != null && params.length > 0) {
+				
+				Logger.info("Performing action: " + getActionName());
+				
 				final HttpClient client = new DefaultHttpClient();
 				final HttpPost post = new HttpPost(params[0]);
 				final List<NameValuePair> parameters = getPostParameters();
@@ -48,13 +55,13 @@ public abstract class AbtractHttpPostingWithResultAsyncTask extends AsyncTask<St
 					client.execute(post);
 				} 
 				catch (Exception e) {
-					Log.e(this.getClass().getName(), e.getMessage());
+					Logger.error(e.getMessage());
 				}
 			}	
 		}
 		else
 		{
-			Log.i(this.getClass().getName(), "No connectivity. Not posting.");
+			Logger.info("No internet connectivity. Not performing action: " + getActionName());
 		}
 
 		return null;

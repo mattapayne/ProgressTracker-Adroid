@@ -13,5 +13,7 @@
 			<accessrule kind="nonaccessible" pattern="com/android/internal/**"/>
 		</accessrules>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/Matt/workspace/ca.mattpayne.progresstracker/libs/logback-android-1.0.10-2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Matt/workspace/ca.mattpayne.progresstracker/libs/slf4j-api-1.7.5.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

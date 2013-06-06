@@ -28,4 +28,9 @@ public class ClearDistressAlertTask extends AbtractHttpPostingWithResultAsyncTas
 	protected String getDialogMessage() {
 		return getActivity().getString(R.string.clear_distress_alert_message_text);
 	}
+
+	@Override
+	protected String getActionName() {
+		return "Clear distress alerts";
+	}
 }

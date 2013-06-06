@@ -11,11 +11,12 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.AsyncTask;
-import android.util.Log;
 import ca.mattpayne.progresstracker.R;
 import ca.mattpayne.progresstracker.ResultsDialogFragment;
 import ca.mattpayne.progresstracker.helpers.ConnectivityHelper;
@@ -28,6 +29,8 @@ public class ShowCheckinsTask extends AsyncTask<String, Void, List<Checkin>> {
 	private static final String LongitudeKey = "longitude";
 	private static final String LatitudeKey = "latitude";
 	private static final String CheckinDateKey = "checkin_date";
+	
+	private static final Logger Logger = LoggerFactory.getLogger(AsyncTask.class);
 	
 	public ShowCheckinsTask(Activity activity, ConnectivityHelper connectivityHelper)
 	{
@@ -42,6 +45,9 @@ public class ShowCheckinsTask extends AsyncTask<String, Void, List<Checkin>> {
 		if(_connectivityHelper.isConnected())
 		{
 			if (params != null && params.length > 0) {
+				
+				Logger.info("We have internet access. Fetching checkins.");
+				
 				final HttpClient client = new DefaultHttpClient();
 				final HttpGet get = new HttpGet(params[0]);
 	
@@ -51,13 +57,13 @@ public class ShowCheckinsTask extends AsyncTask<String, Void, List<Checkin>> {
 					checkins = processResponse(response);
 				} 
 				catch (Exception e) {
-					Log.e(this.getClass().getName(), e.getMessage());
+					Logger.error(e.getMessage());
 				} 
 			}
 		}
 		else
 		{
-			Log.i(this.getClass().getName(), "No connectivity. Cannot get checkins.");
+			Logger.info("No internet connectivity. Cannot get checkins.");
 		}
 		
 		return checkins;
@@ -127,7 +133,7 @@ public class ShowCheckinsTask extends AsyncTask<String, Void, List<Checkin>> {
 			
 		} 
 		catch (Exception e) {
-			Log.e(this.getClass().getName(), e.getMessage());
+			Logger.error(e.getMessage());
 		} 
 		
 		return checkins;

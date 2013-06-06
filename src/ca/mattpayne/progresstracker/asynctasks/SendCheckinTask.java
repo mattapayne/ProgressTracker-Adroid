@@ -10,6 +10,8 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -23,6 +25,8 @@ public class SendCheckinTask extends AsyncTask<Void, Void, Void> {
 	private final ConnectivityHelper _connectivityHelper;
 	private final LocationHelper _locationHelper;
 	private final Context _context;
+	
+	private static final Logger Logger = LoggerFactory.getLogger(SendCheckinTask.class);
 	
 	public SendCheckinTask(Context context, LocationHelper locationHelper, ConnectivityHelper connectivityHelper)
 	{
@@ -40,24 +44,35 @@ public class SendCheckinTask extends AsyncTask<Void, Void, Void> {
 			if(_connectivityHelper.isConnected())
 			{
 				if (_locationHelper.canGetLocation()) {
-	
+					
 					final double lat = _locationHelper.getLatitude();
 					final double lng = _locationHelper.getLongitude();
-					post(lat, lng, url);
+					
+					if(lat != LocationHelper.NOT_SET && lng != LocationHelper.NOT_SET)
+					{
+						Logger.info("We have internet access and we can get location. Sending checkin. Latitude: " + 
+								String.valueOf(lat) + ", Longitude: " + String.valueOf(lng));
+						
+						post(lat, lng, url);	
+					}
+					else
+					{
+						Logger.info("Unable to get location. Not posting checkin.");
+					}
 				}
 				else
 				{
-					Log.i("PostLocationTask", "Can't get location. Not bothering to post.");
+					Logger.info("Can't get location. Not bothering to post.");
 				}
 			}
 			else
 			{
-				Log.i("PostLocationTask", "No connectivity. Can't post.");
+				Logger.info("No internet connectivity. Can't post.");
 			}
 		} 
 		catch (Exception e) 
 		{
-			Log.e(this.getClass().getName(), e.getMessage());
+			Logger.error(e.getMessage());
 		}
 
 		return null;

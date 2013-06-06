@@ -36,4 +36,9 @@ public class DeleteSomeCheckinsTask extends AbtractHttpPostingWithResultAsyncTas
 		message = message.replace("{number}", String.valueOf(_count));
 		return message;
 	}
+
+	@Override
+	protected String getActionName() {
+		return "Delete some checkins";
+	}
 }

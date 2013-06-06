@@ -30,4 +30,9 @@ public class DeleteAllCheckinsTask extends AbtractHttpPostingWithResultAsyncTask
 	protected String getDialogMessage() {
 		return getActivity().getString(R.string.deleted_all_checkins_message_text);
 	}
+
+	@Override
+	protected String getActionName() {
+		return "Delete all checkins";
+	}
 }
