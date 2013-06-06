@@ -3,7 +3,7 @@ package ca.mattpayne.progresstracker.helpers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import android.content.Context;
-import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 
 public class LocationHelperImpl implements LocationHelper {
@@ -12,13 +12,12 @@ public class LocationHelperImpl implements LocationHelper {
 	private boolean _isNetworkEnabled;
 	private boolean _canGetLocation;
 	private final Context _context;
-	private Location _location;
 	private double _latitude;
 	private double _longitude;
+	private String _provider;
 	
 	private static final Logger Logger = LoggerFactory.getLogger(LocationHelperImpl.class);
 
-	
 	public LocationHelperImpl(Context context)
 	{
 		_context = context;
@@ -71,30 +70,15 @@ public class LocationHelperImpl implements LocationHelper {
 			else {
 				this._canGetLocation = true;
 				if (_isNetworkEnabled) {
-					if (_locationManager != null) {
-						_location = _locationManager
-								.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-						if (_location != null) {
-							_latitude = _location.getLatitude();
-							_longitude = _location.getLongitude();
-						}
-					}
+					_provider = LocationManager.NETWORK_PROVIDER;
+					return;
 				}
 				else
 				{
 					Logger.info("Network is NOT enabled.");
 				}
 				if (_isGPSEnabled) {
-					if (_location == null) {
-						if (_locationManager != null) {
-							_location = _locationManager
-									.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-							if (_location != null) {
-								_latitude = _location.getLatitude();
-								_longitude = _location.getLongitude();
-							}
-						}
-					}
+					_provider = LocationManager.GPS_PROVIDER;
 				}
 				else
 				{
@@ -106,5 +90,25 @@ public class LocationHelperImpl implements LocationHelper {
 		catch (Exception e) {
 			Logger.error(e.getMessage());
 		}
+	}
+
+	@Override
+	public void registerListener(LocationListener listener) {
+		_locationManager.requestLocationUpdates(_provider, 0, 0, listener);
+	}
+
+	@Override
+	public void unregisterListener(LocationListener listener) {
+		_locationManager.removeUpdates(listener);
+	}
+
+	@Override
+	public void setLatitude(double lat) {
+		_latitude = lat;
+	}
+
+	@Override
+	public void setLongitude(double lng) {
+		_longitude = lng;
 	}
 }

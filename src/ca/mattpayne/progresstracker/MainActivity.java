@@ -1,5 +1,7 @@
 package ca.mattpayne.progresstracker;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ca.mattpayne.progresstracker.asynctasks.ClearDistressAlertTask;
 import ca.mattpayne.progresstracker.asynctasks.DeleteAllCheckinsTask;
 import ca.mattpayne.progresstracker.asynctasks.DeleteSomeCheckinsTask;
@@ -26,19 +28,23 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity implements OnSharedPreferenceChangeListener  {
 
-	private AlarmHelper _alarmHelper;
 	private PreferencesHelper _preferencesHelper;
 	private ConnectivityHelper _connectivityHelper;
+	private AlarmHelper _alarmHelper;
+	
+	private static final Logger Logger = LoggerFactory.getLogger(MainActivity.class);
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		_alarmHelper = new AlarmHelperImpl(getBaseContext());
 		_preferencesHelper = new PreferencesHelperImpl(getBaseContext());
 		_connectivityHelper = new ConnectivityHelperImpl(getBaseContext());
+		_alarmHelper = new AlarmHelperImpl(getBaseContext());
 		setContentView(R.layout.main);
 		PreferenceManager.setDefaultValues(this, R.layout.preferences, false);
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		prefs.registerOnSharedPreferenceChangeListener(this);
 		setupDisplay();
 	}
 
@@ -56,12 +62,6 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 		}
 
 		return true;
-	}
-
-	@Override
-	public void onSharedPreferenceChanged(SharedPreferences arg0, String arg1) {
-		setIntervalDisplay();
-		_alarmHelper.setAlarm(_preferencesHelper.getCheckinInterval());
 	}
 	
 	private void setIntervalDisplay() {
@@ -135,5 +135,15 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 					execute(getString(R.string.delete_distress_alert_url));
 			}
 		});
+	}
+
+	@Override
+	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+		setIntervalDisplay();
+		int interval = _preferencesHelper.getCheckinInterval();
+		String intervalDescription = _preferencesHelper.getCheckinIntervalDescription();
+		Logger.info("Got preference change notification. New interval is now: " + 
+				intervalDescription + ". Setting alarm.");
+		_alarmHelper.setAlarm(interval);
 	}
 }
