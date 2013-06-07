@@ -26,6 +26,8 @@
     <string name="show_checkins_dialog_title">Checkins</string>
     <string name="distress_alert_message_label">Type your message below</string>
     <string name="btn_sendDistressAlertOnSendActivity">Send</string>
+    <string name="checkins_url">http://progresstracker.herokuapp.com</string>
+    <string name="checkins_url_description">Go to website</string>
     <string-array name="pref_checkin_interval_descriptions">
         <item >1 Minute</item>
         <item >5 Minutes</item>

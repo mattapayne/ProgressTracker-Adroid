@@ -14,23 +14,27 @@ public final class R {
     }
     public static final class attr {
     }
+    public static final class color {
+        public static final int link_color=0x7f070000;
+    }
     public static final class drawable {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int btnClearDistressAlerts=0x7f07000b;
-        public static final int btnDeleteAll=0x7f070006;
-        public static final int btnDeleteSome=0x7f070008;
-        public static final int btnSend=0x7f070004;
-        public static final int btnSendDistressAlert=0x7f07000a;
-        public static final int btnShowCheckins=0x7f070009;
-        public static final int lblMessage=0x7f070002;
-        public static final int linearLayout=0x7f070001;
-        public static final int preferences_menu_item=0x7f07000c;
-        public static final int txtCurrentSettings=0x7f070005;
-        public static final int txtDialogMessage=0x7f070000;
-        public static final int txtMessage=0x7f070003;
-        public static final int txtNumberToDelete=0x7f070007;
+        public static final int btnClearDistressAlerts=0x7f08000b;
+        public static final int btnDeleteAll=0x7f080006;
+        public static final int btnDeleteSome=0x7f080008;
+        public static final int btnSend=0x7f080004;
+        public static final int btnSendDistressAlert=0x7f08000a;
+        public static final int btnShowCheckins=0x7f080009;
+        public static final int lblMessage=0x7f080002;
+        public static final int linearLayout=0x7f080001;
+        public static final int lnkGoToWebsite=0x7f08000c;
+        public static final int preferences_menu_item=0x7f08000d;
+        public static final int txtCurrentSettings=0x7f080005;
+        public static final int txtDialogMessage=0x7f080000;
+        public static final int txtMessage=0x7f080003;
+        public static final int txtNumberToDelete=0x7f080007;
     }
     public static final class layout {
         public static final int dialog=0x7f030000;
@@ -48,6 +52,8 @@ public final class R {
         public static final int btn_sendDistressAlertOnSendActivity=0x7f040019;
         public static final int btn_showCheckins=0x7f04000c;
         public static final int checkin_url=0x7f040002;
+        public static final int checkins_url=0x7f04001a;
+        public static final int checkins_url_description=0x7f04001b;
         public static final int clear_distress_alert_dialog_title=0x7f040015;
         public static final int clear_distress_alert_message_text=0x7f040016;
         public static final int create_distress_alert_url=0x7f040006;
@@ -62,13 +68,13 @@ public final class R {
         public static final int get_checkins_url=0x7f040007;
         public static final int pref_checkin_interval=0x7f040008;
         public static final int pref_checkin_interval_summary=0x7f040009;
-        public static final int pref_default_checkin_interval=0x7f04001a;
-        public static final int pref_interval_key=0x7f04001c;
-        public static final int send_distress_alert_activity_label=0x7f04001d;
+        public static final int pref_default_checkin_interval=0x7f04001c;
+        public static final int pref_interval_key=0x7f04001e;
+        public static final int send_distress_alert_activity_label=0x7f04001f;
         public static final int sent_distress_alert_dialog_title=0x7f040013;
         public static final int sent_distress_alert_message_text=0x7f040014;
         public static final int service_name=0x7f040001;
-        public static final int set_preferences=0x7f04001b;
+        public static final int set_preferences=0x7f04001d;
         public static final int show_checkins_dialog_title=0x7f040017;
     }
     public static final class style {

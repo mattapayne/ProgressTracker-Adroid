@@ -25,16 +25,16 @@
     </EditText>
 
     <Button
-        android:id="@+id/btnDeleteSome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/btn_deleteSome" />
-
-    <Button
         android:id="@+id/btnShowCheckins"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/btn_showCheckins" />
+
+    <Button
+        android:id="@+id/btnDeleteSome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_deleteSome" />
 
     <Button
         android:id="@+id/btnSendDistressAlert"
@@ -47,5 +47,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/btn_clearDistressAlert" />
+
+    <TextView
+        android:id="@+id/lnkGoToWebsite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autoLink="web"
+        android:ems="10"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:text="@string/checkins_url_description"
+        android:textColor="@color/link_color" />
 
 </LinearLayout>

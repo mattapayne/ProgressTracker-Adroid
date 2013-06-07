@@ -16,6 +16,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
@@ -133,6 +134,17 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 			public void onClick(View v) {
 				new ClearDistressAlertTask(MainActivity.this, _connectivityHelper).
 					execute(getString(R.string.delete_distress_alert_url));
+			}
+		});
+		
+		final TextView lnkGoToWeb = (TextView)findViewById(R.id.lnkGoToWebsite);
+		lnkGoToWeb.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Uri uriUrl = Uri.parse(getString(R.string.checkins_url));
+				Intent urlIntent = new Intent(Intent.ACTION_VIEW, uriUrl);
+				startActivity(urlIntent);
 			}
 		});
 	}
