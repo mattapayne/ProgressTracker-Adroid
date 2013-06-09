@@ -109,6 +109,7 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 		});
 		
 		final Button btnShowCheckins = (Button)findViewById(R.id.btnShowCheckins);
+		
 		btnShowCheckins.setOnClickListener(new View.OnClickListener() {
 			
 			@Override

@@ -21,12 +21,12 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int btnClearDistressAlerts=0x7f08000b;
+        public static final int btnClearDistressAlerts=0x7f08000a;
         public static final int btnDeleteAll=0x7f080006;
         public static final int btnDeleteSome=0x7f080008;
         public static final int btnSend=0x7f080004;
-        public static final int btnSendDistressAlert=0x7f08000a;
-        public static final int btnShowCheckins=0x7f080009;
+        public static final int btnSendDistressAlert=0x7f080009;
+        public static final int btnShowCheckins=0x7f08000b;
         public static final int lblMessage=0x7f080002;
         public static final int linearLayout=0x7f080001;
         public static final int lnkGoToWebsite=0x7f08000c;

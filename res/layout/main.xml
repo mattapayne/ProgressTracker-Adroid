@@ -16,19 +16,12 @@
 
     <EditText
         android:id="@+id/txtNumberToDelete"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="number" >
-
         <requestFocus />
     </EditText>
-
-    <Button
-        android:id="@+id/btnShowCheckins"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/btn_showCheckins" />
 
     <Button
         android:id="@+id/btnDeleteSome"
@@ -47,6 +40,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/btn_clearDistressAlert" />
+    
+    <Button
+        android:id="@+id/btnShowCheckins"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_showCheckins" />
 
     <TextView
         android:id="@+id/lnkGoToWebsite"
